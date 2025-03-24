@@ -28,18 +28,18 @@ export default function ModuleSection({
   if (!isActive) return null;
   
   return (
-    <Card className="border rounded-lg shadow-sm p-6 mb-6">
-      <h2 className="text-xl font-semibold mb-4">{title}</h2>
+    <Card className="border rounded-lg shadow-sm p-3 sm:p-4 md:p-6 mb-6">
+      <h2 className="text-lg sm:text-xl font-semibold mb-3 md:mb-4">{title}</h2>
       
       {children}
       
-      <div className="border-t pt-4 flex justify-between items-center dark:border-gray-700">
+      <div className="border-t pt-3 md:pt-4 flex flex-col sm:flex-row justify-between items-start sm:items-center gap-3 dark:border-gray-700">
         {externalLinks && externalLinks.length > 0 ? (
           <a
             href={externalLinks[0].url}
             target="_blank"
             rel="noopener noreferrer"
-            className="text-primary hover:underline flex items-center"
+            className="text-primary hover:underline flex items-center text-sm md:text-base"
           >
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -58,21 +58,27 @@ export default function ModuleSection({
             {externalLinks[0].text}
           </a>
         ) : (
-          <div></div>
+          <div className="hidden sm:block"></div>
         )}
         
-        <div className="flex space-x-2">
+        <div className="flex space-x-2 w-full sm:w-auto justify-end">
           {hasPrevious && previousSection && (
             <Button 
               variant="outline" 
               onClick={previousSection}
+              size="sm"
+              className="text-xs md:text-sm"
             >
               Previous
             </Button>
           )}
           
           {hasNext && nextSection && (
-            <Button onClick={nextSection}>
+            <Button 
+              onClick={nextSection}
+              size="sm"
+              className="text-xs md:text-sm"
+            >
               {nextSectionText}
             </Button>
           )}

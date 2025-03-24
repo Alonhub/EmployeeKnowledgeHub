@@ -60,11 +60,11 @@ export default function SocialFactors() {
           onValueChange={(value) => setCurrentSection(value)}
           className="w-full"
         >
-          <TabsList className="grid w-full grid-cols-4">
-            <TabsTrigger value="introduction">Introduction</TabsTrigger>
-            <TabsTrigger value="trust">Trust & Relationships</TabsTrigger>
-            <TabsTrigger value="motivation">Motivation Factors</TabsTrigger>
-            <TabsTrigger value="communities">Communities of Practice</TabsTrigger>
+          <TabsList className="grid w-full grid-cols-2 md:grid-cols-4 gap-2">
+            <TabsTrigger value="introduction" className="text-xs sm:text-sm md:text-base">Introduction</TabsTrigger>
+            <TabsTrigger value="trust" className="text-xs sm:text-sm md:text-base">Trust & Relationships</TabsTrigger>
+            <TabsTrigger value="motivation" className="text-xs sm:text-sm md:text-base">Motivation Factors</TabsTrigger>
+            <TabsTrigger value="communities" className="text-xs sm:text-sm md:text-base">Communities of Practice</TabsTrigger>
           </TabsList>
         </Tabs>
       </div>

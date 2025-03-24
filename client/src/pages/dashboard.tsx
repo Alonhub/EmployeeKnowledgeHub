@@ -30,24 +30,25 @@ export default function Dashboard() {
 
   return (
     <Layout>
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 md:gap-6 mb-6">
         {/* Progress Overview Card */}
         <ProgressOverview progress={overallProgress} />
         
         {/* Current Learning Card */}
         <Card>
-          <CardContent className="pt-6">
+          <CardContent className="pt-4 md:pt-6 px-3 md:px-6">
             <div className="flex items-center mb-4">
-              <div className="rounded-full bg-blue-100 dark:bg-blue-900 p-3 mr-4">
-                <Book className="h-5 w-5 text-blue-500" />
+              <div className="rounded-full bg-blue-100 dark:bg-blue-900 p-2 sm:p-3 mr-3 sm:mr-4">
+                <Book className="h-4 w-4 sm:h-5 sm:w-5 text-blue-500" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold">Current Learning</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Continue where you left off</p>
+                <h3 className="text-base sm:text-lg font-semibold">Current Learning</h3>
+                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Continue where you left off</p>
               </div>
             </div>
             <Button 
-              className="w-full"
+              className="w-full text-xs sm:text-sm"
+              size="sm"
               onClick={() => {
                 // Direct to the appropriate module based on progress
                 const nextModule = getNextModuleToComplete(moduleProgress);
@@ -61,19 +62,19 @@ export default function Dashboard() {
         
         {/* Certification Card */}
         <Card>
-          <CardContent className="pt-6">
+          <CardContent className="pt-4 md:pt-6 px-3 md:px-6">
             <div className="flex items-center mb-4">
-              <div className="rounded-full bg-green-100 dark:bg-green-900 p-3 mr-4">
-                <Award className="h-5 w-5 text-green-500" />
+              <div className="rounded-full bg-green-100 dark:bg-green-900 p-2 sm:p-3 mr-3 sm:mr-4">
+                <Award className="h-4 w-4 sm:h-5 sm:w-5 text-green-500" />
               </div>
               <div>
-                <h3 className="text-lg font-semibold">Certification</h3>
-                <p className="text-sm text-gray-500 dark:text-gray-400">Complete all modules to earn your certificate</p>
+                <h3 className="text-base sm:text-lg font-semibold">Certification</h3>
+                <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">Complete all modules to earn your certificate</p>
               </div>
             </div>
             <div className="flex items-center justify-between">
-              <span className="text-sm text-gray-500 dark:text-gray-400">{overallProgress}% Complete</span>
-              <span className="text-sm font-medium text-gray-700 dark:text-gray-300">
+              <span className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">{overallProgress}% Complete</span>
+              <span className="text-xs sm:text-sm font-medium text-gray-700 dark:text-gray-300">
                 {calculateCompletedModules(moduleProgress)}/3 Modules
               </span>
             </div>
@@ -81,7 +82,7 @@ export default function Dashboard() {
         </Card>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-4 md:gap-6">
         <div className="lg:col-span-2">
           <CourseOverview />
           <ModuleProgress moduleProgress={moduleProgress} />
@@ -91,18 +92,18 @@ export default function Dashboard() {
           <ResourcesList />
 
           <Card>
-            <CardContent className="pt-6">
-              <h3 className="text-lg font-semibold mb-4">Recent Updates</h3>
-              <div className="space-y-4">
+            <CardContent className="pt-4 md:pt-6 px-3 md:px-6">
+              <h3 className="text-base sm:text-lg font-semibold mb-3 md:mb-4">Recent Updates</h3>
+              <div className="space-y-3 md:space-y-4">
                 {updatesData.map((update, index) => (
                   <div 
                     key={index} 
-                    className={`pb-3 ${
+                    className={`pb-2 md:pb-3 ${
                       index < updatesData.length - 1 ? "border-b dark:border-gray-700" : ""
                     }`}
                   >
-                    <p className="font-medium">{update.title}</p>
-                    <p className="text-sm text-gray-500 dark:text-gray-400">{update.timeAgo}</p>
+                    <p className="font-medium text-sm sm:text-base">{update.title}</p>
+                    <p className="text-xs sm:text-sm text-gray-500 dark:text-gray-400">{update.timeAgo}</p>
                   </div>
                 ))}
               </div>
