@@ -17,8 +17,8 @@ export default function Layout({ children }: LayoutProps) {
       <div className="flex-1 flex flex-col overflow-hidden">
         <Header toggleSidebar={toggleSidebar} />
         
-        <main className="flex-1 overflow-y-auto p-4 md:p-6 pt-24"> {/* Increased top padding from pt-16 to pt-24 */}
-          <div className="mx-auto max-w-7xl">
+        <main className="flex-1 overflow-y-auto p-3 sm:p-4 md:p-6 pt-20 sm:pt-22 md:pt-24"> {/* Adjusted padding for different screen sizes */}
+          <div className="mx-auto max-w-full lg:max-w-7xl">
             {children}
           </div>
         </main>
