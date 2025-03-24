@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { Link, useLocation } from "wouter";
+import { useLocation } from "wouter";
 import { Avatar, AvatarFallback } from "@/components/ui/avatar";
 import { Progress } from "@/components/ui/progress";
 import { Button } from "@/components/ui/button";
@@ -20,7 +20,7 @@ import {
 } from "lucide-react";
 
 export default function Sidebar() {
-  const [location] = useLocation();
+  const [location, navigate] = useLocation();
   const { theme, toggleTheme } = useTheme();
   const { user, logout } = useAuth();
   const { moduleProgress, overallProgress } = useProgress();
@@ -125,105 +125,110 @@ export default function Sidebar() {
         
         {/* Navigation */}
         <nav className="px-2 pt-2 pb-4 space-y-1">
-          <Link href="/">
-            <a 
-              className={`flex items-center px-4 py-2 rounded-md w-full text-left ${
-                location === "/" 
-                  ? "bg-gray-100 dark:bg-gray-700 text-primary dark:text-white" 
-                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-              }`}
-              onClick={closeSidebarOnMobile}
-            >
-              <HomeIcon className="mr-3 h-5 w-5" />
-              <span>Dashboard</span>
-            </a>
-          </Link>
+          <div 
+            className={`flex items-center px-4 py-2 rounded-md w-full text-left cursor-pointer ${
+              location === "/" 
+                ? "bg-gray-100 dark:bg-gray-700 text-primary dark:text-white" 
+                : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+            }`}
+            onClick={() => {
+              navigate("/");
+              closeSidebarOnMobile();
+            }}
+          >
+            <HomeIcon className="mr-3 h-5 w-5" />
+            <span>Dashboard</span>
+          </div>
           
-          <Link href="/social-factors">
-            <a 
-              className={`flex items-center justify-between px-4 py-2 rounded-md w-full text-left ${
-                location === "/social-factors" 
-                  ? "bg-gray-100 dark:bg-gray-700 text-primary dark:text-white" 
-                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-              }`}
-              onClick={closeSidebarOnMobile}
-            >
-              <div className="flex items-center">
-                <Users className="mr-3 h-5 w-5" />
-                <span>Social Factors</span>
-              </div>
-              <div className="flex items-center space-x-1">
-                <span className="text-xs">{moduleProgress?.get(1) || 0}%</span>
-                {moduleProgress?.get(1) === 100 && (
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                )}
-              </div>
-            </a>
-          </Link>
+          <div 
+            className={`flex items-center justify-between px-4 py-2 rounded-md w-full text-left cursor-pointer ${
+              location === "/social-factors" 
+                ? "bg-gray-100 dark:bg-gray-700 text-primary dark:text-white" 
+                : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+            }`}
+            onClick={() => {
+              navigate("/social-factors");
+              closeSidebarOnMobile();
+            }}
+          >
+            <div className="flex items-center">
+              <Users className="mr-3 h-5 w-5" />
+              <span>Social Factors</span>
+            </div>
+            <div className="flex items-center space-x-1">
+              <span className="text-xs">{moduleProgress?.get(1) || 0}%</span>
+              {moduleProgress?.get(1) === 100 && (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+              )}
+            </div>
+          </div>
           
-          <Link href="/cultural-factors">
-            <a 
-              className={`flex items-center justify-between px-4 py-2 rounded-md w-full text-left ${
-                location === "/cultural-factors" 
-                  ? "bg-gray-100 dark:bg-gray-700 text-primary dark:text-white" 
-                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-              }`}
-              onClick={closeSidebarOnMobile}
-            >
-              <div className="flex items-center">
-                <Globe className="mr-3 h-5 w-5" />
-                <span>Cultural Factors</span>
-              </div>
-              <div className="flex items-center space-x-1">
-                <span className="text-xs">{moduleProgress?.get(2) || 0}%</span>
-                {moduleProgress?.get(2) === 100 && (
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                )}
-              </div>
-            </a>
-          </Link>
+          <div 
+            className={`flex items-center justify-between px-4 py-2 rounded-md w-full text-left cursor-pointer ${
+              location === "/cultural-factors" 
+                ? "bg-gray-100 dark:bg-gray-700 text-primary dark:text-white" 
+                : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+            }`}
+            onClick={() => {
+              navigate("/cultural-factors");
+              closeSidebarOnMobile();
+            }}
+          >
+            <div className="flex items-center">
+              <Globe className="mr-3 h-5 w-5" />
+              <span>Cultural Factors</span>
+            </div>
+            <div className="flex items-center space-x-1">
+              <span className="text-xs">{moduleProgress?.get(2) || 0}%</span>
+              {moduleProgress?.get(2) === 100 && (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+              )}
+            </div>
+          </div>
           
-          <Link href="/evaluation">
-            <a 
-              className={`flex items-center justify-between px-4 py-2 rounded-md w-full text-left ${
-                location === "/evaluation" 
-                  ? "bg-gray-100 dark:bg-gray-700 text-primary dark:text-white" 
-                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-              }`}
-              onClick={closeSidebarOnMobile}
-            >
-              <div className="flex items-center">
-                <ClipboardCheck className="mr-3 h-5 w-5" />
-                <span>Evaluation</span>
-              </div>
-              <div className="flex items-center space-x-1">
-                <span className="text-xs">{moduleProgress?.get(3) || 0}%</span>
-                {moduleProgress?.get(3) === 100 && (
-                  <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-500" viewBox="0 0 20 20" fill="currentColor">
-                    <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
-                  </svg>
-                )}
-              </div>
-            </a>
-          </Link>
+          <div 
+            className={`flex items-center justify-between px-4 py-2 rounded-md w-full text-left cursor-pointer ${
+              location === "/evaluation" 
+                ? "bg-gray-100 dark:bg-gray-700 text-primary dark:text-white" 
+                : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+            }`}
+            onClick={() => {
+              window.location.href = "/evaluation";
+              closeSidebarOnMobile();
+            }}
+          >
+            <div className="flex items-center">
+              <ClipboardCheck className="mr-3 h-5 w-5" />
+              <span>Evaluation</span>
+            </div>
+            <div className="flex items-center space-x-1">
+              <span className="text-xs">{moduleProgress?.get(3) || 0}%</span>
+              {moduleProgress?.get(3) === 100 && (
+                <svg xmlns="http://www.w3.org/2000/svg" className="h-4 w-4 text-green-500" viewBox="0 0 20 20" fill="currentColor">
+                  <path fillRule="evenodd" d="M10 18a8 8 0 100-16 8 8 0 000 16zm3.707-9.293a1 1 0 00-1.414-1.414L9 10.586 7.707 9.293a1 1 0 00-1.414 1.414l2 2a1 1 0 001.414 0l4-4z" clipRule="evenodd" />
+                </svg>
+              )}
+            </div>
+          </div>
           
-          <Link href="/feedback">
-            <a 
-              className={`flex items-center px-4 py-2 rounded-md w-full text-left ${
-                location === "/feedback" 
-                  ? "bg-gray-100 dark:bg-gray-700 text-primary dark:text-white" 
-                  : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
-              }`}
-              onClick={closeSidebarOnMobile}
-            >
-              <MessageSquare className="mr-3 h-5 w-5" />
-              <span>Feedback</span>
-            </a>
-          </Link>
+          <div
+            className={`flex items-center px-4 py-2 rounded-md w-full text-left cursor-pointer ${
+              location === "/feedback" 
+                ? "bg-gray-100 dark:bg-gray-700 text-primary dark:text-white" 
+                : "text-gray-700 dark:text-gray-300 hover:bg-gray-100 dark:hover:bg-gray-700"
+            }`}
+            onClick={() => {
+              window.location.href = "/feedback";
+              closeSidebarOnMobile();
+            }}
+          >
+            <MessageSquare className="mr-3 h-5 w-5" />
+            <span>Feedback</span>
+          </div>
         </nav>
         
         {/* Footer */}
