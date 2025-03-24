@@ -159,10 +159,70 @@ export async function registerRoutes(app: Express): Promise<Server> {
     res.json({ user: userWithoutPassword });
   });
   
+  // Course routes
+  app.get("/api/courses", async (_, res, next) => {
+    try {
+      const courses = await storage.getCourses();
+      res.json(courses);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.get("/api/courses/featured", async (_, res, next) => {
+    try {
+      const featuredCourses = await storage.getFeaturedCourses();
+      res.json(featuredCourses);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.get("/api/courses/:id", async (req, res, next) => {
+    try {
+      const courseId = parseInt(req.params.id);
+      if (isNaN(courseId)) {
+        return res.status(400).json({ message: "Invalid course ID" });
+      }
+      
+      const course = await storage.getCourseById(courseId);
+      if (!course) {
+        return res.status(404).json({ message: "Course not found" });
+      }
+      
+      res.json(course);
+    } catch (error) {
+      next(error);
+    }
+  });
+
+  app.get("/api/courses/category/:category", async (req, res, next) => {
+    try {
+      const courses = await storage.getCoursesByCategory(req.params.category);
+      res.json(courses);
+    } catch (error) {
+      next(error);
+    }
+  });
+
   // Module routes
   app.get("/api/modules", async (_, res, next) => {
     try {
       const modules = await storage.getModules();
+      res.json(modules);
+    } catch (error) {
+      next(error);
+    }
+  });
+  
+  app.get("/api/modules/course/:courseId", async (req, res, next) => {
+    try {
+      const courseId = parseInt(req.params.courseId);
+      if (isNaN(courseId)) {
+        return res.status(400).json({ message: "Invalid course ID" });
+      }
+      
+      const modules = await storage.getModulesByCourse(courseId);
       res.json(modules);
     } catch (error) {
       next(error);
@@ -210,8 +270,8 @@ export async function registerRoutes(app: Express): Promise<Server> {
       const progress = await storage.updateProgress(
         user.id,
         result.data.moduleId,
-        result.data.percentComplete,
-        result.data.completed
+        result.data.percentComplete || 0,
+        result.data.completed || false
       );
       
       res.json(progress);

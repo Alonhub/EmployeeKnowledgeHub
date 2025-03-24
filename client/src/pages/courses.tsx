@@ -13,22 +13,21 @@ export default function CoursesPage() {
   const [, setLocation] = useLocation();
   const [selectedCategory, setSelectedCategory] = useState<string | null>(null);
 
-  const { data: courses, isLoading } = useQuery({
+  const { data: courses = [], isLoading } = useQuery<Course[]>({
     queryKey: ['/api/courses'],
     enabled: true,
   });
 
-  const { data: featuredCourses } = useQuery({
+  const { data: featuredCourses = [] } = useQuery<Course[]>({
     queryKey: ['/api/courses/featured'],
     enabled: true,
   });
 
-  const categories = courses ? 
-    Array.from(new Set(courses.map((course: Course) => course.category).filter(Boolean))) : 
-    [];
+  const categories = 
+    Array.from(new Set(courses.map((course) => course.category).filter(Boolean))) as string[]; 
 
-  const filteredCourses = selectedCategory && courses ? 
-    courses.filter((course: Course) => course.category === selectedCategory) : 
+  const filteredCourses = selectedCategory ? 
+    courses.filter((course) => course.category === selectedCategory) : 
     courses;
 
   return (
@@ -55,14 +54,14 @@ export default function CoursesPage() {
           </div>
         ) : (
           <>
-            {featuredCourses && featuredCourses.length > 0 && (
+            {featuredCourses.length > 0 && (
               <div className="mb-12">
                 <h2 className="text-2xl font-semibold mb-4 flex items-center">
                   <Star className="mr-2 h-5 w-5 text-yellow-500" />
                   Featured Courses
                 </h2>
                 <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-                  {featuredCourses.map((course: Course) => (
+                  {featuredCourses.map((course) => (
                     <CourseCard key={course.id} course={course} onClick={() => setLocation(`/dashboard?courseId=${course.id}`)} />
                   ))}
                 </div>
@@ -78,7 +77,7 @@ export default function CoursesPage() {
                 >
                   All
                 </Button>
-                {categories.map((category: string) => (
+                {categories.map((category) => (
                   <Button 
                     key={category} 
                     variant={selectedCategory === category ? "default" : "outline"}
@@ -91,7 +90,7 @@ export default function CoursesPage() {
             </div>
 
             <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
-              {filteredCourses?.map((course: Course) => (
+              {filteredCourses.map((course) => (
                 <CourseCard key={course.id} course={course} onClick={() => setLocation(`/dashboard?courseId=${course.id}`)} />
               ))}
             </div>
