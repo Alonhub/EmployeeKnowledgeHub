@@ -11,8 +11,22 @@ export const users = pgTable("users", {
   company: text("company"),
 });
 
+export const courses = pgTable("courses", {
+  id: serial("id").primaryKey(),
+  title: text("title").notNull(),
+  slug: text("slug").notNull().unique(),
+  description: text("description").notNull(),
+  imageUrl: text("image_url"),
+  category: text("category"),
+  level: text("level"), // beginner, intermediate, advanced
+  duration: text("duration"),
+  featured: boolean("featured").default(false),
+  createdAt: timestamp("created_at").defaultNow(),
+});
+
 export const modules = pgTable("modules", {
   id: serial("id").primaryKey(),
+  courseId: integer("course_id").notNull(),
   title: text("title").notNull(),
   slug: text("slug").notNull().unique(),
   description: text("description"),
@@ -53,6 +67,25 @@ export const insertUserSchema = createInsertSchema(users).pick({
   email: true,
   fullName: true,
   company: true,
+});
+
+export const insertCourseSchema = createInsertSchema(courses).pick({
+  title: true,
+  slug: true,
+  description: true,
+  imageUrl: true,
+  category: true,
+  level: true,
+  duration: true,
+  featured: true,
+});
+
+export const insertModuleSchema = createInsertSchema(modules).pick({
+  courseId: true,
+  title: true,
+  slug: true,
+  description: true,
+  order: true,
 });
 
 export const insertProgressSchema = createInsertSchema(progress).pick({
@@ -101,4 +134,8 @@ export type Evaluation = typeof evaluations.$inferSelect;
 export type InsertFeedback = z.infer<typeof insertFeedbackSchema>;
 export type Feedback = typeof feedback.$inferSelect;
 
+export type InsertCourse = z.infer<typeof insertCourseSchema>;
+export type Course = typeof courses.$inferSelect;
+
+export type InsertModule = z.infer<typeof insertModuleSchema>;
 export type Module = typeof modules.$inferSelect;

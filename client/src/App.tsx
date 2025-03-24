@@ -6,6 +6,7 @@ import SocialFactors from "@/pages/social-factors";
 import CulturalFactors from "@/pages/cultural-factors";
 import Evaluation from "@/pages/evaluation";
 import Feedback from "@/pages/feedback";
+import CoursesPage from "@/pages/courses";
 import { useAuth } from "@/context/AuthContext";
 import AuthModal from "@/components/auth/AuthModal";
 import { Suspense, useEffect } from "react";
@@ -14,7 +15,9 @@ import { SidebarProvider } from "@/components/ui/sidebar";
 function Router() {
   return (
     <Switch>
-      <Route path="/" component={Dashboard} />
+      <Route path="/" component={CoursesPage} />
+      <Route path="/courses" component={CoursesPage} />
+      <Route path="/dashboard" component={Dashboard} />
       <Route path="/social-factors" component={SocialFactors} />
       <Route path="/cultural-factors" component={CulturalFactors} />
       <Route path="/evaluation" component={Evaluation} />
